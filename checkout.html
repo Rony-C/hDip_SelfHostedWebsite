@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    <title>Checkout</title>
+    <style>
+        #final-price{
+            font-weight: bold;
+            font-style: italic;
+            color: darkred;
+            font-family: 'DejaVu Sans', Arial, Helvetica, sans-serif;
+        }
+        #final-price-form{
+            font-style: italic;
+            color: darkred;
+            font-family: 'DejaVu Sans', Arial, Helvetica, sans-serif;
+        }
+    </style>
+</head>
+<body>
+<!-- Navigation header -->
+<!-- Source https://getbootstrap.com/docs/5.1/components/navbar/ -->
+<header>
+    <!-- Make the bar large and dark -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">G00296371</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/shop">Shop</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="gallery.html">Gallery</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                           data-bs-toggle="dropdown" aria-expanded="false">
+                            Contact
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="contactForm.html">Contact Us</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item" href="servicesContact.html">Services</a></li>
+                        </ul>
+                    </li>
+
+                </ul>
+                <!-- Flexi class added to make the search dynamic -->
+                <form class="d-flex" action="/product" method="get">
+                    <input class="form-control mx-2" placeholder="Search" aria-label="Search" type="text" id="id"
+                           name="id" value="1">
+                    <button class="btn btn-secondary" type="submit">Product Search</button>
+                </form>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<div class="container">
+    <div class="container d-flex justify-content-center mt-3">
+        <h1>CHECKOUT</h1>
+    </div>
+    <div>
+        <h4 id="cart-items" class="container d-flex justify-content-center mt-3"></h4>
+    </div>
+    <div>
+        <h2 id="final-price" class="container d-flex justify-content-center mt-3 font-weight-bold"></h2>
+    </div>
+    <div class=" d-flex justify-content-center">
+        <form class="">
+            <div class="form-group my-3">
+                <label for="name">Name:</label><br>
+                <input type="text" id="name" name="name" required>
+            </div>
+            <div class="form-group my-3">
+                <label for="email">Email:</label><br>
+                <input type="email" id="email" name="email" required>
+            </div>
+
+            <div class="form-group my-3">
+                <label for="address">Address:</label><br>
+                <textarea id="address" name="address" required></textarea>
+            </div>
+
+            <div class="form-group my-3">
+                <label for="payment">Payment Method:</label><br>
+                <select id="payment" name="payment">
+                    <option value="credit-card">Credit Card</option>
+                    <option value="paypal">PayPal</option>
+                    <option value="stripe">Stripe</option>
+                </select>
+            </div>
+
+            <div>
+                <h2 id="final-price-form" class="container d-flex justify-content-center mt-3 font-weight-bold">a</h2>
+            </div>
+
+            <div class=" d-flex justify-content-center">
+                <button onclick="purchase()" type="submit" class="btn btn-primary my-3">Place Order</button>
+            </div>
+
+        </form>
+
+    </div>
+    <div class=" d-flex justify-content-center"><a href="/shop">
+        <button class="btn btn-secondary">Back to Shop</button>
+    </a></div>
+</div>
+<script>
+    let finalPrice = 0;
+    for (let i = 0; i < localStorage.length; i++) {
+        let product = localStorage.key(i);
+        let content = JSON.parse(localStorage.getItem(product));
+        console.log("[INFO] " + content);
+
+        let totalCost = content.q * content.p;
+        finalPrice += totalCost;
+
+        if (content.q > 0) {
+            document.getElementById("cart-items").innerHTML += product + " x " + content.q + " = " + totalCost + "<br>";
+        }
+        document.getElementById("final-price").innerHTML = "Total Cost: €" + finalPrice;
+        document.getElementById("final-price-form").innerHTML = "Total Cost: €" + finalPrice;
+    }
+
+    function purchase(){
+        alert("Order Placed you will receive an email update shortly")
+    }
+</script>
+
+</body>
+</html>
